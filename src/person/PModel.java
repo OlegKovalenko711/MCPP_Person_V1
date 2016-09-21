@@ -9,10 +9,6 @@ public class PModel extends AbstractTableModel
 
 	public ArrayList<Person> pp = new ArrayList();
 
-	PCommand pc;
-	
-		
-
 	public PModel(ArrayList<Person> pp)
 	{
 		this.pp = pp;
@@ -34,7 +30,8 @@ public class PModel extends AbstractTableModel
 	public String getColumnName(int c)
 	{
 		String result = "";
-		switch (c) {
+		switch (c)
+		{
 		case 0:
 			result = "id";
 			break;
@@ -54,7 +51,8 @@ public class PModel extends AbstractTableModel
 	@Override
 	public Object getValueAt(int row, int col)
 	{
-		switch (col) {
+		switch (col)
+		{
 		case 0:
 			return pp.get(row).getId();
 		case 1:
@@ -67,5 +65,4 @@ public class PModel extends AbstractTableModel
 			return "";
 		}
 	}
-
 }
