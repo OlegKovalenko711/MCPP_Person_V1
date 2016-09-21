@@ -61,6 +61,8 @@ public class PDriver
 		Connection con = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
 		Statement st = con.createStatement();
 		st.execute("delete from Person where id = '" + p.getId() + "'");
+		pm = new PModel(al);
+		pm.fireTableDataChanged();
 		con.close();
 	}
 
