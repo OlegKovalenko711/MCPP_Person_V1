@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -87,11 +88,10 @@ public class PPanel extends JPanel
 				{
 					pd.create(new Person(id, txtFName.getText(), txtLName.getText(), age));
 					pm.fireTableDataChanged();
-
 				}
 				catch (ClassNotFoundException | SQLException e1)
 				{
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Запись с таким индексом уже существует");
 				}
 			}
 		});
@@ -108,7 +108,6 @@ public class PPanel extends JPanel
 				try
 				{
 					pd.delete(new Person(id, txtFName.getText(), txtLName.getText(), age));
-
 				}
 				catch (ClassNotFoundException | SQLException e1)
 				{
@@ -125,7 +124,9 @@ public class PPanel extends JPanel
 			{
 				try
 				{
+					pd.al.clear();
 					pd.read();
+					pm.fireTableDataChanged();
 				}
 				catch (ClassNotFoundException | SQLException e1)
 				{
@@ -133,6 +134,31 @@ public class PPanel extends JPanel
 					e1.printStackTrace();
 				}
 
+			}
+		});
+
+		btnUpdate.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+
+				int id = Integer.parseInt(txtId.getText());
+				int age = Integer.parseInt(txtAge.getText());
+				try
+				{
+					pd.update(new Person(id, txtFName.getText(), txtLName.getText(), age));
+					// pm.fireTableDataChanged();
+					pd.al.clear();
+					pd.read();
+				}
+				catch (ClassNotFoundException | SQLException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				pm.fireTableDataChanged();
 			}
 		});
 	}

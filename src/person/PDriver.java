@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class PDriver
 {
 	ArrayList<Person> al = new ArrayList<>();
-	PModel pm;
 
 	public ArrayList<Person> read() throws ClassNotFoundException, SQLException
 	{
@@ -25,8 +24,6 @@ public class PDriver
 		{
 			al.add(new Person(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
 		}
-		pm = new PModel(al);
-		pm.fireTableDataChanged();
 		con.close();
 		return al;
 	}
@@ -39,8 +36,8 @@ public class PDriver
 
 		st.execute("insert into Person values('" + p.getId() + "','" + p.getlName() + "','" + p.getfName() + "','"
 				+ p.getAge() + "')");
+		al.add(new Person(p.getId(), p.getlName(), p.getfName(), p.getAge()));
 
-		read();
 		con.close();
 	}
 
@@ -50,7 +47,10 @@ public class PDriver
 		Connection con = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
 		Statement st = con.createStatement();
 
-		st.executeUpdate("update Person set lName = '" + p.getlName() + "' where id = 2");
+		st.executeUpdate("update Person set id = '" + p.getId() + "' where id = " + p.getId());
+		st.executeUpdate("update Person set fName = '" + p.getfName() + "' where id = " + p.getId());
+		st.executeUpdate("update Person set lName = '" + p.getlName() + "' where id = " + p.getId());
+		st.executeUpdate("update Person set age = '" + p.getAge() + "' where id = " + p.getId());
 
 		con.close();
 	}
@@ -61,8 +61,6 @@ public class PDriver
 		Connection con = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
 		Statement st = con.createStatement();
 		st.execute("delete from Person where id = '" + p.getId() + "'");
-		pm = new PModel(al);
-		pm.fireTableDataChanged();
 		con.close();
 	}
 
@@ -70,7 +68,7 @@ public class PDriver
 	// SQLException
 	// {
 	// PDriver drv = new PDriver();
-	// // drv.update(new Person(2, "Vasya", "Pupkin1", 39));
+	// drv.update(new Person(1, "a", "q", 2));
 	// // drv.create(new Person(4, "Vera", "Niga", 39));
 	//
 	// System.out.println(drv.read());
