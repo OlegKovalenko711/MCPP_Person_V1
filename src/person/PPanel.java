@@ -1,12 +1,14 @@
 package person;
 
 import java.awt.Color;
+import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -15,6 +17,9 @@ import javax.swing.JTextField;
 
 public class PPanel extends JPanel
 {
+
+	public JButton btnCreate;
+
 	public PPanel() throws ClassNotFoundException, SQLException
 	{
 
@@ -23,6 +28,7 @@ public class PPanel extends JPanel
 
 		setLayout(null);
 		setBackground(Color.lightGray);
+
 		JTable tab = new JTable(pm);
 		JScrollPane jsp = new JScrollPane(tab);
 		jsp.setBounds(25, 230, 650, 200);
@@ -60,8 +66,9 @@ public class PPanel extends JPanel
 		txtAge.setBounds(90, 140, 150, 30);
 		add(txtAge);
 
-		JButton btnCreate = new JButton("Create");
+		btnCreate = new JButton("Create");
 		btnCreate.setBounds(125, 450, 90, 30);
+		btnCreate.setActionCommand("create");
 		add(btnCreate);
 
 		JButton btnRead = new JButton("Read");
